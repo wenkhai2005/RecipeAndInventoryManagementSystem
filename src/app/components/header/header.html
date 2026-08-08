@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #F7DC6F;">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/dashboard-34389792">
+      <img src="assets/images/logo.png" alt="Reciper Logo" width="50" height="50" class="me-2">
+      <span class="fw-bold">Reciper</span>
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard-34389792">Home</a>
+        </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              Recipes
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/recipes-34389792">All Recipes</a></li>
+              <li><a class="dropdown-item" routerLink="/add-recipe-34389792">Add Recipe</a></li>
+              <li><a class="dropdown-item" routerLink="/delete-recipe-34389792">Delete Recipe</a></li>
+              <li><a class="dropdown-item" routerLink="/choose-recipe-34389792">Edit Recipe</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              Inventory
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/inventory-34389792">All Inventories</a></li>
+              <li><a class="dropdown-item" routerLink="/add-inventory-34389792">Add Inventory</a></li>
+              <li><a class="dropdown-item" routerLink="/delete-inventory-34389792">Delete Inventory</a></li>
+              <li><a class="dropdown-item" routerLink="/choose-inventory-34389792">Edit Inventory</a></li>
+            </ul>
+          </li>
+        
+
+      </ul>
+
+      <div class="d-flex align-items-center">
+        @if (authService.fullname) {
+          <span class="me-3">Welcome, {{ authService.fullname }}</span>
+          <button class="btn btn-primary btn-sm" (click)="logout()">Logout</button>
+        } @else {
+          <a routerLink="/login-34389792" class="btn btn-primary btn-sm">Login</a>
+        }
+      </div>
+    </div>
+  </div>
+</nav>

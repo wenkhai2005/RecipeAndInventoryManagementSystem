@@ -1,0 +1,67 @@
+<main class="container my-5">
+
+  @if (authService.isLoggedIn()) {
+
+    <div class="bg-info text-white py-3 px-4 rounded-top">
+      <h4 class="fw-bold mb-0">Task 2: Dashboard & Homepage</h4>
+    </div>
+
+    <div class="border p-3 position-relative">
+      <p><strong>Name:</strong> Daniel Tan Wen Khai</p>
+      <p><strong>Student ID:</strong> 12345678</p>
+
+      <div class="position-absolute top-0 end-0 fw-bold pe-3 pt-2">
+        <img src="assets/images/logo.png" alt="Reciper Logo" width="50" height="50" class="me-2">
+      </div>
+    
+      <div class="bg-success-subtle border rounded mt-3 p-3">
+        <p class="fw-bold mb-1">Welcome, {{ authService.fullname }}!</p>
+        <p class="mb-1">Role: {{ authService.role }}</p>
+        <p>Email: {{ authService.email }}</p>
+        <p>User ID: {{ authService.userId }}</p>
+      </div>
+
+      <h5 class="mt-4 fw-bold">Real-time Statistics</h5>
+      <div class="row g-3 mt-2 text-white">
+        <div class="col-md-4">
+          <div class="p-4 rounded bg-primary text-center">
+            <h6>Total Users</h6>
+            <h2>{{ users().length }}</h2>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 rounded bg-success text-center">
+            <h6>Total Recipes</h6>
+            <h2>{{ recipes().length }}</h2>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 rounded bg-warning text-center text-dark">
+            <h6>Inventory Items</h6>
+            <h2>{{ inventories().length }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <h5 class="mt-5 fw-bold">Quick Actions</h5>
+      <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+        <a routerLink="/recipes-34389792" class="btn btn-primary px-4">View Recipes</a>
+        <a routerLink="/add-recipe-34389792" class="btn btn-success px-4">Add Recipe</a>
+        <a routerLink="/inventory-34389792" class="btn btn-info px-4 text-white">View Inventory</a>
+        <a routerLink="/add-inventory-34389792" class="btn btn-warning px-4">Add Inventory</a>
+      </div>
+    </div>
+
+  } @else {
+
+    <div class="text-center mt-5">
+      <h2 class="fw-bold mb-3">Please log in to continue</h2>
+      <p class="text-muted">
+        Access your Recipe & Inventory Management dashboard once you're signed in.
+      </p>
+      <a routerLink="/login-34389792" class="btn btn-primary px-4 py-2 mt-3 shadow-sm">Login</a>
+    </div>
+
+  }
+
+</main>

@@ -1,0 +1,96 @@
+<main class="container-fluid my-5" style="background-color:#F7DC6F; border-radius:12px; padding:40px 60px;">
+
+  <div class="container mb-5" style="max-width:1000px;">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h3 class="card-title mb-3">Low Stock Alert</h3>
+
+        @if (lowStock.length === 0) {
+          <p class="text-muted mb-0">All ingredients are enough!</p>
+        } @else {
+          <ul class="list-group list-group-flush">
+            @for (item of lowStock; track $index) {
+              <li class="list-group-item">{{ item.ingredientName }}</li>
+            }
+          </ul>
+        }
+
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto" style="max-width:1400px; padding:48px; background-color:#FFF8DC; border-radius:16px;">
+    <h1 class="fw-bold mb-4" style="color:#2C3E50;">Inventory Table</h1>
+
+    <div class="d-flex gap-3 mb-4">
+      <a
+        routerLink="/add-inventory-34389792"
+        class="btn fw-semibold"
+        style="background-color:#FFA07A; color:#333; padding:10px 20px;"
+      >
+        Add Inventory
+      </a>
+      <a
+        routerLink="/delete-inventory-34389792"
+        class="btn fw-semibold"
+        style="background-color:#FFA07A; color:#333; padding:10px 20px;"
+      >
+        Delete Inventory
+      </a>
+    </div>
+
+    <h4 class="mb-4">
+      Total Value: <span class="text-success fw-bold">{{ totalValue }}$</span>
+    </h4>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center" style="min-width:1300px;">
+        <thead class="table-dark">
+          <tr>
+            <th>Inventory ID</th>
+            <th>User ID</th>
+            <th>Ingredient Name</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Category</th>
+            <th>Purchase Date</th>
+            <th>Expiration Date</th>
+            <th>Location</th>
+            <th>Cost</th>
+            <th>Created Date</th>
+            <th>Expiration Alert</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (item of inventories; track item.inventoryId) {
+            <tr>
+              <td>{{ item.inventoryId }}</td>
+              <td>{{ item.userId }}</td>
+              <td>{{ item.ingredientName }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.unit }}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.purchaseDate | date:'mediumDate' }}</td>
+              <td>{{ item.expirationDate | date:'mediumDate' }}</td>
+              <td>{{ item.location }}</td>
+              <td>{{ item.cost | currency }}</td>
+              <td>{{ item.createdDate | date:'mediumDate' }}</td>
+              <td>
+                <span
+                  [ngClass]="{
+                    'badge rounded-pill px-3 py-2 text-success border border-success bg-light': (item.expirationDate | expiredInventory) === 'Not Expired',
+                    'badge rounded-pill px-3 py-2 text-dark bg-warning': (item.expirationDate | expiredInventory) === 'Within 3 Days',
+                    'badge rounded-pill px-3 py-2 text-white bg-danger': (item.expirationDate | expiredInventory) === 'Expired'
+                  }"
+                >
+                  {{ item.expirationDate | expiredInventory }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

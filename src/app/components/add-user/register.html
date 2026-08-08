@@ -1,0 +1,129 @@
+<form (ngSubmit)="addUser()" #f="ngForm" class="p-4 shadow rounded-4" 
+      style="max-width: 450px; margin: 40px auto; background-color: #fff;">
+  <h3 class="text-center mb-4">Register User</h3>
+
+  @if (error) {
+    <div class="alert alert-danger text-center mt-2">
+      {{ error }}
+    </div>
+  }
+
+  @if (message) {
+    <div class="alert alert-success text-center mt-2">
+      {{ message }}
+    </div>
+  }
+
+  <div class="mb-3">
+    <label class="form-label">Email</label>
+    <input
+      name="email"
+      type="email"
+      class="form-control"
+      [(ngModel)]="user.email"
+      required
+      email
+      #emailInput="ngModel"
+      placeholder="Enter a valid email (e.g., john@email.com)"
+    />
+    @if (emailInput.invalid && emailInput.touched) {
+      <div class="text-danger small mt-1">
+        @if (emailInput.errors?.['required']) {
+          <span>Email is required.</span>
+        } @else if (emailInput.errors?.['email']) {
+          <span>Please enter a valid email address.</span>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Password</label>
+    <input
+      name="password"
+      type="password"
+      class="form-control"
+      [(ngModel)]="user.password"
+      required
+      minlength="8"
+      #passwordInput="ngModel"
+      placeholder="8+ chars with upper, lower, number, special"
+    />
+    @if (passwordInput.invalid && passwordInput.touched) {
+      <div class="text-danger small mt-1">
+        @if (passwordInput.errors?.['required']) {
+          <span>Password is required.</span>
+        } @else if (passwordInput.errors?.['minlength']) {
+          <span>Must be at least 8 characters long.</span>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Full Name</label>
+    <input
+      name="fullname"
+      class="form-control"
+      [(ngModel)]="user.fullname"
+      required
+      minlength="2"
+      maxlength="100"
+      #fullnameInput="ngModel"
+      placeholder="Enter your full name"
+    />
+    @if (fullnameInput.invalid && fullnameInput.touched) {
+      <div class="text-danger small mt-1">
+        <span>Full name is required.</span>
+      </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Role</label>
+    <select
+      name="role"
+      class="form-select"
+      [(ngModel)]="user.role"
+      required
+      #roleInput="ngModel"
+    >
+      <option value="">Select Role</option>
+      <option value="admin">Admin</option>
+      <option value="chef">Chef</option>
+      <option value="manager">Manager</option>
+      <option value="other">Other</option>
+    </select>
+    @if (roleInput.invalid && roleInput.touched) {
+      <div class="text-danger small mt-1">
+        <span>Role is required.</span>
+      </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Phone</label>
+    <input
+      name="phone"
+      class="form-control"
+      [(ngModel)]="user.phone"
+      required
+      pattern="^(?:\+61|0)[0-9]{9}$"
+      #phoneInput="ngModel"
+      placeholder="+61 or 0 followed by 9 digits"
+    />
+    @if (phoneInput.invalid && phoneInput.touched) {
+      <div class="text-danger small mt-1">
+        @if (phoneInput.errors?.['required']) {
+          <span>Phone number is required.</span>
+        } @else if (phoneInput.errors?.['pattern']) {
+          <span>Invalid phone number format.</span>
+        }
+      </div>
+    }
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100 py-2" [disabled]="f.invalid">
+    Register
+  </button>
+</form>

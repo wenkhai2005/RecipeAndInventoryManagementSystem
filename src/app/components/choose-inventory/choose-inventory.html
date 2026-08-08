@@ -1,0 +1,34 @@
+<main>
+  <h1 class="text-center py-3">Edit Inventory</h1>
+  <p class="text-center">Edit an inventory from the collection</p>
+
+  <div
+    class="container my-4"
+    style="max-width: 800px; background-color: #fff; border-radius: 12px; padding: 32px;"
+  >
+    <h5>Select Inventory to Edit</h5>
+
+    <form (ngSubmit)="onConfirm()">
+      <div class="mb-3">
+        <label class="form-label">Select from list</label>
+        <select
+          class="form-select"
+          name="inventoryId"
+          [(ngModel)]="selectedId"
+          required
+        >
+          <option value="" disabled selected>Choose Inventory</option>
+          @for (item of inventories; track item.inventoryId) {
+            <option [value]="item.inventoryId">
+              {{ item.inventoryId }} — {{ item.ingredientName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!selectedId">
+        Confirm
+      </button>
+    </form>
+  </div>
+</main>

@@ -1,0 +1,255 @@
+<main class="container my-5">
+  <h1 class="text-center mb-3">Edit Recipe</h1>
+  <p class="text-center text-muted mb-4">
+    Modify your recipe details below and confirm to update.
+  </p>
+
+  @if (successMessage) {
+    <div class="alert alert-success text-center">{{ successMessage }}</div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger text-center">{{ errorMessage }}</div>
+  }
+
+  @if (recipe) {
+    <div class="card shadow p-4" style="max-width: 800px; margin: auto;">
+      <form (ngSubmit)="onSubmit(editForm)" #editForm="ngForm" novalidate>
+        <h5 class="fw-bold mb-3">Recipe Information</h5>
+
+        <div class="mb-3">
+          <label class="form-label">Recipe ID *</label>
+          <input
+            type="text"
+            class="form-control"
+            name="recipeId"
+            [(ngModel)]="recipe.recipeId"
+            readonly
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">User ID *</label>
+          <input
+            type="text"
+            class="form-control"
+            name="userId"
+            [(ngModel)]="recipe.userId"
+            required
+            pattern="^U-\d{5}$"
+            #userId="ngModel"
+          />
+          @if (userId.invalid && userId.touched) {
+            <div class="text-danger small mt-1">
+              @if (userId.errors?.['required']) {
+                <span>User ID is required.</span>
+              } @else if (userId.errors?.['pattern']) {
+                <span>Format must be U-XXXXX (5 digits).</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-8 mb-3">
+          <label class="form-label">Recipe Title *</label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            [(ngModel)]="recipe.title"
+            required
+            minlength="3"
+            maxlength="100"
+            pattern="^[A-Za-z\\s]+$"
+            #title="ngModel"
+          />
+          @if (title.invalid && title.touched) {
+            <div class="text-danger small mt-1">
+              @if (title.errors?.['required']) {
+                <span>Title is required.</span>
+              } @else if (title.errors?.['minlength']) {
+                <span>Title must be at least 3 characters.</span>
+              } @else if (title.errors?.['pattern']) {
+                <span>Title must contain only letters.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Chef Name *</label>
+          <input
+            type="text"
+            class="form-control"
+            name="chef"
+            [(ngModel)]="recipe.chef"
+            required
+            minlength="3"
+            maxlength="100"
+            pattern="^[A-Za-z\\s]+$"
+            #chef="ngModel"
+          />
+          @if (chef.invalid && chef.touched) {
+            <div class="text-danger small mt-1">
+              @if (chef.errors?.['required']) {
+                <span>Chef name is required.</span>
+              } @else if (chef.errors?.['minlength']) {
+                <span>Chef name must be at least 3 characters.</span>
+              } @else if (chef.errors?.['pattern']) {
+                <span>Chef name must contain only letters.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <h5 class="fw-bold mt-4 mb-3">Recipe Details</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Meal Type *</label>
+            <select
+              class="form-select"
+              name="mealType"
+              [(ngModel)]="recipe.mealType"
+              required
+              #mealType="ngModel"
+            >
+              <option value="" disabled>Choose Meal Type</option>
+              @for (type of mealTypes; track $index) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+            @if (mealType.invalid && mealType.touched) {
+              <div class="text-danger small mt-1">Meal Type is required.</div>
+            }
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Cuisine Type *</label>
+            <select
+              class="form-select"
+              name="cuisineType"
+              [(ngModel)]="recipe.cuisineType"
+              required
+              #cuisineType="ngModel"
+            >
+              <option value="" disabled>Choose Cuisine Type</option>
+              @for (cuisine of cuisineTypes; track $index) {
+                <option [value]="cuisine">{{ cuisine }}</option>
+              }
+            </select>
+            @if (cuisineType.invalid && cuisineType.touched) {
+              <div class="text-danger small mt-1">Cuisine Type is required.</div>
+            }
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Prep Time (minutes) *</label>
+            <input
+              type="number"
+              class="form-control"
+              name="prepTime"
+              [(ngModel)]="recipe.prepTime"
+              required
+              min="1"
+              max="480"
+              #prepTime="ngModel"
+            />
+            @if (prepTime.invalid && prepTime.touched) {
+              <div class="text-danger small mt-1">Must be between 1-480 minutes.</div>
+            }
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Difficulty *</label>
+            <select
+              class="form-select"
+              name="difficulty"
+              [(ngModel)]="recipe.difficulty"
+              required
+              #difficulty="ngModel"
+            >
+              <option value="" disabled>Choose Difficulty</option>
+              @for (diff of difficulties; track $index) {
+                <option [value]="diff">{{ diff }}</option>
+              }
+            </select>
+            @if (difficulty.invalid && difficulty.touched) {
+              <div class="text-danger small mt-1">Difficulty is required.</div>
+            }
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Servings *</label>
+            <input
+              type="number"
+              class="form-control"
+              name="servings"
+              [(ngModel)]="recipe.servings"
+              required
+              min="1"
+              max="20"
+              #servings="ngModel"
+            />
+            @if (servings.invalid && servings.touched) {
+              <div class="text-danger small mt-1">Must be between 1-20 servings.</div>
+            }
+          </div>
+        </div>
+
+        <h5 class="fw-bold mt-4 mb-3">Ingredients</h5>
+        <div class="mb-3">
+          <textarea
+            class="form-control"
+            name="ingredients"
+            rows="3"
+            [(ngModel)]="ingredientsText"
+            required
+            minlength="3"
+            #ingredients="ngModel"
+          ></textarea>
+          @if (ingredients.invalid && ingredients.touched) {
+            <div class="text-danger small mt-1">
+              @if (ingredients.errors?.['required']) {
+                <span>Ingredients are required.</span>
+              } @else if (ingredients.errors?.['minlength']) {
+                <span>Each ingredient must be at least 3 characters.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <h5 class="fw-bold mt-4 mb-3">Instructions</h5>
+        <div class="mb-3">
+          <textarea
+            class="form-control"
+            name="instructions"
+            rows="4"
+            [(ngModel)]="instructionsText"
+            required
+            minlength="10"
+            #instructions="ngModel"
+          ></textarea>
+          @if (instructions.invalid && instructions.touched) {
+            <div class="text-danger small mt-1">
+              @if (instructions.errors?.['required']) {
+                <span>Instructions are required.</span>
+              } @else if (instructions.errors?.['minlength']) {
+                <span>Each step must be at least 10 characters.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <a routerLink="/recipes-34389792" class="btn btn-outline-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary px-4" [disabled]="editForm.invalid">
+            Confirm
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+
+</main>

@@ -1,0 +1,27 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #212529; 
+  color: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+app-header {
+  flex-shrink: 0;
+}
+
+main {
+  flex: 1; 
+  background-color: white; 
+  color: black;
+}
+
+app-footer {
+  flex-shrink: 0;
+  background-color: #212529;
+  color: white;
+}

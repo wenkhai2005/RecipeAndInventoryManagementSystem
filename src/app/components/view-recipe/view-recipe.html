@@ -1,0 +1,77 @@
+<main class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold">{{ recipe.title }}</h1>
+    <div>
+      <a [routerLink]="['/edit-recipe-34389792', recipe.recipeId]" class="btn btn-warning me-2">Edit</a>
+      <button class="btn btn-danger me-2" (click)="deleteRecipe(recipe.recipeId)">Delete</button>
+      <a routerLink="/recipes-34389792" class="btn btn-outline-secondary">Back to List</a>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-md-6">
+      <div class="card border-secondary mb-4">
+        <div class="card-header fw-bold">Recipe Information</div>
+        <div class="card-body">
+          <p><strong>Chef:</strong> {{ recipe.chef }}</p>
+          <p><strong>Cuisine:</strong> {{ recipe.cuisineType }}</p>
+          <p><strong>Meal Type:</strong> {{ recipe.mealType }}</p>
+          <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
+          <p><strong>Prep Time:</strong> {{ recipe.prepTime }} minutes</p>
+          <p><strong>Servings:</strong> {{ recipe.servings }}</p>
+          <p><strong>Created:</strong> {{ recipe.createdDate | date: 'medium' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-secondary mb-4">
+        <div class="card-header fw-bold">HD Tasks</div>
+        <div class="card-body">
+          <a [routerLink]="['/ai-analysis-34389792', recipe.recipeId]"
+             class="btn btn-primary w-100 mb-2">
+            HD Task 1: AI Analysis
+          </a>
+
+          <a [routerLink]="['/translate-recipe-34389792', recipe.recipeId]"
+             class="btn btn-info w-100 mb-2 text-white">
+            HD Task 2: Translation
+          </a>
+
+          <button
+            class="btn w-100"
+            [ngClass]="isSpeaking ? 'btn-warning' : 'btn-success'"
+            (click)="toggleSpeech()">
+            {{ isSpeaking ? 'Stop Speaking' : 'HD Task 3: Text-to-Speech' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card border-secondary">
+        <div class="card-header fw-bold">Ingredients</div>
+        <ul class="list-group list-group-flush">
+          @for (ingredient of recipe.ingredients; track $index) {
+            <li class="list-group-item">{{ ingredient }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-secondary">
+        <div class="card-header fw-bold">Instructions</div>
+        <ol class="list-group list-group-numbered list-group-flush">
+          @for (step of recipe.instructions; track $index) {
+            <li class="list-group-item">{{ step }}</li>
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</main>

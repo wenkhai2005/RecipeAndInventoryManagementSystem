@@ -1,0 +1,7 @@
+.navbar-brand img {
+  border-radius: 8px;
+  object-fit: cover;
+}
+.navbar {
+  padding: 10px 20px;
+}

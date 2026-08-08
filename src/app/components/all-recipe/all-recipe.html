@@ -1,0 +1,61 @@
+<main class="container my-5">
+  <h2 class="fw-bold mb-4">All Recipes</h2>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">Task 3: Recipe Management</h4>
+    <a routerLink="/add-recipe-34389792" class="btn btn-primary">
+      Add New Recipe
+    </a>
+  </div>
+
+  @if (recipes.length === 0) {
+    <div class="alert alert-warning text-center">
+      No recipes found.
+    </div>
+  } @else {
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      @for (recipe of recipes; track recipe.recipeId) {
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">{{ recipe.title }}</h5>
+              <p class="text-muted mb-2">by {{ recipe.chef }}</p>
+
+              <p><strong>Cuisine:</strong> {{ recipe.cuisineType }}</p>
+              <p><strong>Meal Type:</strong> {{ recipe.mealType }}</p>
+              <p><strong>Prep Time:</strong> {{ recipe.prepTime }} mins</p>
+              <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
+              <p><strong>Servings:</strong> {{ recipe.servings }}</p>
+              <p><strong>Created:</strong> {{ recipe.createdDate | date:'yyyy-MM-dd' }}</p>
+
+              <p class="mb-1"><strong>Ingredients:</strong> {{ recipe.ingredients.length }} items</p>
+              <p><strong>Instructions:</strong> {{ recipe.instructions.length }} steps</p>
+            </div>
+
+            <div class="card-footer bg-white d-flex justify-content-between">
+              <a
+                [routerLink]="['/view-recipe-34389792', recipe.recipeId]"
+                class="btn btn-sm btn-primary text-white flex-fill me-2"
+                style="background-color: #0d6efd; border: none;"
+              >
+                View
+              </a>
+              <a
+                [routerLink]="['/edit-recipe-34389792', recipe.recipeId]"
+                class="btn btn-sm btn-warning text-dark flex-fill me-2"
+              >
+                Edit
+              </a>
+              <button
+                class="btn btn-sm btn-danger flex-fill"
+                (click)="deleteRecipe(recipe.recipeId!)"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</main>

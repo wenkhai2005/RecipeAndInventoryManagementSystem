@@ -1,0 +1,47 @@
+<h1 class="text-center py-4">Delete Inventory</h1>
+<p class="text-center mb-4">Remove an inventory item from the collection</p>
+
+<div class="container bg-white rounded-4 shadow p-4" style="max-width: 800px;">
+  <h5>Select Inventory to Delete</h5>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Select from list</label>
+      <select
+        class="form-select"
+        [(ngModel)]="selectedInventoryId"
+        required
+      >
+        <option value="" disabled selected>Choose Inventory</option>
+        @for (item of inventories; track item.inventoryId) {
+          <option [value]="item.inventoryId">
+            {{ item.inventoryId }} — {{ item.ingredientName }}
+          </option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-danger mt-2"
+    [disabled]="!selectedInventoryId"
+    (click)="openConfirmationDialog(confirmModal)"
+  >
+    Delete Inventory
+  </button>
+</div>
+
+<ng-template #confirmModal let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Deletion</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete <strong>{{ selectedInventoryId }}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('no')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('yes')">Yes, Delete</button>
+  </div>
+</ng-template>

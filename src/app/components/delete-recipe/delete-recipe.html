@@ -1,0 +1,42 @@
+<h1 class="text-center py-4">Delete Recipe</h1>
+<p class="text-center mb-4">Remove a recipe from the collection</p>
+
+<div class="container bg-white rounded-4 shadow p-4" style="max-width: 800px;">
+  <h5>Select Recipe to Delete</h5>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Select from list</label>
+      <select class="form-select" [(ngModel)]="selectedRecipeId" required>
+        <option value="" disabled selected>Choose Recipe</option>
+        @for (recipe of recipes; track recipe.recipeId) {
+          <option [value]="recipe.recipeId">
+            {{ recipe.recipeId }} — {{ recipe.title }}
+          </option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-danger mt-2"
+    [disabled]="!selectedRecipeId"
+    (click)="openConfirmationDialog(confirmModal)">
+    Delete Recipe
+  </button>
+</div>
+
+<ng-template #confirmModal let-modal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Deletion</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete <strong>{{ selectedRecipeId }}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('no')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('yes')">Yes, Delete</button>
+  </div>
+</ng-template>

@@ -1,0 +1,254 @@
+<h1 class="text-center py-4">+ Add New Inventory</h1>
+<p class="text-center mb-4">
+  Stay Fresh! Let's manage your inventories efficiently.
+</p>
+
+<div class="container bg-white rounded-4 p-4 shadow" style="max-width: 800px;">
+
+  @if (successMessage) {
+    <div class="alert alert-success text-center">
+      {{ successMessage }}
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <form (ngSubmit)="addInventory(inventoryForm)" #inventoryForm="ngForm" novalidate>
+
+    <div class="mb-3">
+      <label for="userId" class="form-label">User ID *</label>
+      <input
+        type="text"
+        class="form-control"
+        id="userId"
+        name="userId"
+        required
+        pattern="^U-\d{5}$"
+        [(ngModel)]="inventory.userId"
+        #userId="ngModel"
+      >
+      @if (userId.invalid && userId.touched) {
+        <div class="text-danger small mt-1">
+          @if (userId.errors?.['required']) {
+            <span>User ID is required.</span>
+          } @else if (userId.errors?.['pattern']) {
+            <span>Format must be U-XXXXX (5 digits).</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="ingredientName" class="form-label">Ingredient Name *</label>
+      <input
+        type="text"
+        class="form-control"
+        id="ingredientName"
+        name="ingredientName"
+        required
+        minlength="2"
+        pattern="^[A-Za-z'\\-\\s]+$"
+        [(ngModel)]="inventory.ingredientName"
+        #ingredientName="ngModel"
+      >
+      @if (ingredientName.invalid && ingredientName.touched) {
+        <div class="text-danger small mt-1">
+          @if (ingredientName.errors?.['required']) {
+            <span>Ingredient name is required.</span>
+          } @else if (ingredientName.errors?.['minlength']) {
+            <span>At least 2 characters.</span>
+          } @else if (ingredientName.errors?.['pattern']) {
+            <span>Letters, spaces, hyphens, and apostrophes only.</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="quantity" class="form-label">Quantity *</label>
+        <input
+          type="number"
+          class="form-control"
+          id="quantity"
+          name="quantity"
+          required
+          min="1"
+          step="1"
+          [(ngModel)]="inventory.quantity"
+          #quantity="ngModel"
+        >
+        @if (quantity.invalid && quantity.touched) {
+          <div class="text-danger small mt-1">
+            @if (quantity.errors?.['required']) {
+              <span>Quantity is required.</span>
+            } @else if (quantity.errors?.['min']) {
+              <span>Must be at least 1.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="unit" class="form-label">Unit *</label>
+        <select
+          id="unit"
+          class="form-select"
+          name="unit"
+          required
+          [(ngModel)]="inventory.unit"
+          #unit="ngModel"
+        >
+          <option value="" disabled selected>Choose Unit</option>
+          <option value="pieces">Pieces</option>
+          <option value="kg">Kilograms (kg)</option>
+          <option value="g">Grams (g)</option>
+          <option value="liters">Liters (L)</option>
+          <option value="ml">Milliliters (ml)</option>
+          <option value="cups">Cups</option>
+          <option value="tbsp">Tablespoons (tbsp)</option>
+          <option value="tsp">Teaspoons (tsp)</option>
+          <option value="dozen">Dozen</option>
+        </select>
+        @if (unit.invalid && unit.touched) {
+          <div class="text-danger small mt-1">
+            Unit is required.
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label for="category" class="form-label">Category *</label>
+        <select
+          id="category"
+          class="form-select"
+          name="category"
+          required
+          [(ngModel)]="inventory.category"
+          #category="ngModel"
+        >
+          <option value="" disabled selected>Choose Category</option>
+          <option value="Vegetables">Vegetables</option>
+          <option value="Fruits">Fruits</option>
+          <option value="Meat">Meat</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Grains">Grains</option>
+          <option value="Spices">Spices</option>
+          <option value="Beverages">Beverages</option>
+          <option value="Frozen">Frozen</option>
+          <option value="Canned">Canned</option>
+          <option value="Other">Other</option>
+        </select>
+        @if (category.invalid && category.touched) {
+          <div class="text-danger small mt-1">
+            Category is required.
+          </div>
+        }
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label for="purchaseDate" class="form-label">Purchase Date *</label>
+        <input
+          type="date"
+          class="form-control"
+          id="purchaseDate"
+          name="purchaseDate"
+          required
+          [(ngModel)]="inventory.purchaseDate"
+          #purchaseDate="ngModel"
+        >
+        @if (purchaseDate.invalid && purchaseDate.touched) {
+          <div class="text-danger small mt-1">
+            Purchase date is required.
+          </div>
+        }
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label for="expirationDate" class="form-label">Expiration Date *</label>
+        <input
+          type="date"
+          class="form-control"
+          id="expirationDate"
+          name="expirationDate"
+          required
+          [(ngModel)]="inventory.expirationDate"
+          #expirationDate="ngModel"
+        >
+        @if (expirationDate.invalid && expirationDate.touched) {
+          <div class="text-danger small mt-1">
+            Expiry date is required.
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="location" class="form-label">Location *</label>
+        <input
+          type="text"
+          class="form-control"
+          id="location"
+          name="location"
+          required
+          minlength="2"
+          [(ngModel)]="inventory.location"
+          #location="ngModel"
+        >
+        @if (location.invalid && location.touched) {
+          <div class="text-danger small mt-1">
+            @if (location.errors?.['required']) {
+              <span>Location is required.</span>
+            } @else if (location.errors?.['minlength']) {
+              <span>At least 2 characters.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="cost" class="form-label">Cost ($) *</label>
+        <input
+          type="number"
+          class="form-control"
+          id="cost"
+          name="cost"
+          required
+          min="0"
+          step="0.01"
+          [(ngModel)]="inventory.cost"
+          #cost="ngModel"
+        >
+        @if (cost.invalid && cost.touched) {
+          <div class="text-danger small mt-1">
+            @if (cost.errors?.['required']) {
+              <span>Cost is required.</span>
+            } @else if (cost.errors?.['min']) {
+              <span>Cost cannot be negative.</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <a routerLink="/inventory-34389792" class="btn btn-outline-primary">
+        View Inventory
+      </a>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="inventoryForm.invalid"
+      >
+        Add Inventory
+      </button>
+    </div>
+  </form>
+</div>

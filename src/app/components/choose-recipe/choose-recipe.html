@@ -1,0 +1,37 @@
+<main>
+  <h1 class="text-center py-4">Edit Recipe</h1>
+  <p class="text-center mb-4">Select a recipe from the collection to edit</p>
+
+  <div class="container bg-white rounded-4 shadow p-4" style="max-width: 800px;">
+    <h5>Select Recipe to Edit</h5>
+
+    <form (ngSubmit)="onConfirm()" #chooseForm="ngForm">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Select from list</label>
+          <select
+            class="form-select"
+            name="recipeId"
+            required
+            [(ngModel)]="selectedId"
+          >
+            <option value="" disabled selected>Choose Recipe</option>
+            @for (recipe of recipes; track recipe.recipeId) {
+              <option [value]="recipe.recipeId">
+                {{ recipe.recipeId }} — {{ recipe.title }}
+              </option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary mt-2"
+        [disabled]="!selectedId"
+      >
+        Confirm
+      </button>
+    </form>
+  </div>
+</main>

@@ -1,0 +1,30 @@
+<main class="container my-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white fw-bold">
+      AI Analysis Results
+    </div>
+
+    <div class="card-body">
+
+      @if (loading) {
+        <div class="text-center text-muted my-4">
+          <div class="spinner-border text-secondary" role="status"></div>
+          <p class="mt-2">Analyzing recipe with AI...</p>
+        </div>
+      } @else if (analysis) {
+        <pre class="bg-light p-3 rounded">{{ analysis }}</pre>
+      } @else {
+        <div class="text-center text-muted my-4">
+          <p>No analysis results available.</p>
+        </div>
+      }
+
+      <div class="text-end mt-3">
+        <a [routerLink]="['/view-recipe-34389792', recipe.recipeId]" class="btn btn-outline-secondary">
+          ← Back to Recipe
+        </a>
+      </div>
+
+    </div>
+  </div>
+</main>
