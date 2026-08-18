@@ -22,12 +22,14 @@ const inventoryRouter = require("./routes/inventories");
 const userRouter = require("./routes/users");
 const analyzeHealthRouter = require("./routes/analyze-health")
 const translateRecipeRouter = require("./routes/translate-recipe")
+const healthRouter = require("./routes/health")
 
 app.use("/api", recipeRouter);
 app.use("/api", inventoryRouter);
 app.use("/api", userRouter);
-app.use("/api", analyzeHealthRouter)
-app.use("/api", translateRecipeRouter)
+app.use("/api", analyzeHealthRouter);
+app.use("/api", translateRecipeRouter);
+app.use("/api", healthRouter);
 
 const server = http.createServer(app);
 
