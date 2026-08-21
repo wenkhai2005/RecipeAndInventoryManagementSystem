@@ -1,0 +1,24 @@
+name: Deploy Recipe Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/RecipeManagementPrivate/recipe-inventory-management
+            git pull origin main
+            npm install
+            sudo systemctl restart recipe-backend
+            sudo systemctl status recipe-backend --no-pager
